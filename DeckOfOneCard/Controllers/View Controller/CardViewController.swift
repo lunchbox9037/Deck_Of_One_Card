@@ -13,24 +13,35 @@ class CardViewController: UIViewController {
     @IBOutlet weak var cardValueSuitLabel: UILabel!
     @IBOutlet weak var cardImageView: UIImageView!
     @IBOutlet weak var drawButton: UIButton!
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         drawButton.layer.cornerRadius = 8
+        cardImageView.image = UIImage(named: "cardback")
     }
     
     // MARK: - Actions
     @IBAction func drawButtonTapped(_ sender: Any) {
-        CardController.fetchCard { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let card):
-                    self.fetchImageAndUpdateViews(for: card)
-                case .failure(let error):
-                    self.presentErrorToUser(localizedError: error)
+        cardImageView.image = UIImage(named: "cardback")
+        cardValueSuitLabel.text = "Shuffling..."
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+            CardController.fetchCard { (result) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let card):
+                        self.fetchImageAndUpdateViews(for: card)
+                    case .failure(let error):
+                        self.presentErrorToUser(localizedError: error)
+                    }
                 }
             }
         }
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        cardImageView.image = UIImage(named: "cardback")
+        cardValueSuitLabel.text = "Draw a Card!"
     }
     
     // MARK: - Helper Functions
