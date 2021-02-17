@@ -18,12 +18,12 @@ class CardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         drawButton.layer.cornerRadius = 8
-        cardImageView.image = UIImage(named: "cardback")
+        cardImageView.image = UIImage(named: "hearthstone")
     }
     
     // MARK: - Actions
     @IBAction func drawButtonTapped(_ sender: Any) {
-        cardImageView.image = UIImage(named: "cardback")
+        cardImageView.image = UIImage(named: "hearthstone")
         cardValueSuitLabel.text = "Shuffling..."
         Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
             CardController.fetchCard { (result) in
@@ -40,7 +40,7 @@ class CardViewController: UIViewController {
     }
     
     @IBAction func resetButtonPressed(_ sender: Any) {
-        cardImageView.image = UIImage(named: "cardback")
+        cardImageView.image = UIImage(named: "hearthstone")
         cardValueSuitLabel.text = "Draw a Card!"
     }
     
